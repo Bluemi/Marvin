@@ -1,0 +1,16 @@
+Fragen, die geklärt werden müssen:
+
+Wann wird ein neues Neuron erstellt?
+
+Wann triggert ein Neuron seine Synapsen?
+
+Input-Alphabet == Output-Alphabet?
+
+Wann wird eine Synapse verstärkt/geschwächt/gelöscht?
+
+Mit einer großen Anzahl an Neuronen starten?
+
+Wie suchen neue Synapsen ihr Target?
+	Vielleicht wird immer ein neues Neuron erstellt
+
+Kann ein Neuron unterscheiden von welcher Synapse es getriggert wird?
