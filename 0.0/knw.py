@@ -74,7 +74,10 @@ class KnowingNeuralWeb:
 			connection.activity = 0
 	def run(self):
 		print(self.toString())
-		while True:
-			input("")
-			self.tick()
-			print(self.toString())
+		try: # ^C -> except
+			while True:
+				input("")
+				self.tick()
+				print(self.toString())
+		except:
+			print("\nExited ...")
