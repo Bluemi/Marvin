@@ -1,5 +1,7 @@
 #!/usr/bin/python3.4 -B
 
+import sys
+
 class Neuron:
 	def __init__(self, name):
 		self.name = name
@@ -73,11 +75,11 @@ class KnowingNeuralWeb:
 		for connection in self.connections: # could be removed
 			connection.activity = 0
 	def run(self):
-		print(self.toString())
+		sys.stdout.write(self.toString())
 		try: # ^C -> except
 			while True:
 				input("")
 				self.tick()
-				print(self.toString())
+				sys.stdout.write(self.toString())
 		except:
 			print("\nExited ...")
