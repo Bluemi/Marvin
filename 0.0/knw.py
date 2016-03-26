@@ -8,11 +8,11 @@ class Neuron:
 		self.activity = activity
 
 class Connection:
-	def __init__(self, sender, receiver, weigth):
+	def __init__(self, sender, receiver, weight):
 		self.activity = 0
 		self.senderName = sender
 		self.receiverName = receiver
-		self.weigth = weigth
+		self.weight = weight
 
 class OutputNeuron(Neuron):
 	def applyActivity(self, activity):
@@ -43,8 +43,8 @@ class KnowingNeuralWeb:
 				tmp = line[11:].split(", ")
 				sender = tmp[0]
 				receiver = tmp[1]
-				weigth = int(tmp[2])
-				web.addConnection(Connection(sender, receiver, weigth))
+				weight = float(tmp[2])
+				web.addConnection(Connection(sender, receiver, weight))
 			else:
 				print("can't interpret line \"" + line + "\"")
 		return web
@@ -54,7 +54,7 @@ class KnowingNeuralWeb:
 			string += neuron.name + "(" + str(neuron.activity) + "): "
 			for connection in self.connections:
 				if connection.senderName == neuron.name:
-					string += "(" + connection.receiverName + ", " + str(connection.weigth) + ")"
+					string += "(" + connection.receiverName + ", " + str(connection.weight) + ")"
 			string += "\n"
 		return string.strip("\n")
 	def getNeuron(self, name):
@@ -63,7 +63,7 @@ class KnowingNeuralWeb:
 				return neuron
 	def tick(self):
 		for connection in self.connections:
-			connection.activity = connection.weigth * self.getNeuron(connection.senderName).activity
+			connection.activity = connection.weight * self.getNeuron(connection.senderName).activity
 		for neuron in self.neurons:
 			tmpAct = 0
 			for connection in self.connections:
