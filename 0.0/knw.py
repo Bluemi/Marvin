@@ -3,23 +3,38 @@
 import sys
 
 class Neuron:
-	def __init__(self, name):
-		self.name = name
+	def __init__(self, data):
+		self.name = data[0]
 		self.activity = 0
+		self.isMin = False
+		self.isOutput = False
+		for i in range(1, len(data)):
+			if data[i].startswith("min="):
+				self.isMin = True
+				self.minActivity = float(data[i][4:])
+			elif data[i].startswith("out="):
+				self.isOutput = True
+				self.output = data[i][4:]
+	def onActivated(self):
+		if self.isOutput:
+			print("\"" + self.output + "\"")
 	def applyActivity(self, activity):
-		self.activity = activity
+		if self.isMin:
+			if activity >= self.minActivity:
+				self.activity = activity
+				self.onActivated()
+			else:
+				self.activity = 0
+		else:
+			self.onActivated()
+			self.activity = activity
 
 class Connection:
-	def __init__(self, sender, receiver, weight):
+	def __init__(self, data):
 		self.activity = 0
-		self.senderName = sender
-		self.receiverName = receiver
-		self.weight = weight
-
-class OutputNeuron(Neuron):
-	def applyActivity(self, activity):
-		self.activity = activity
-		print(self.name + " now active")
+		self.senderName = data[0]
+		self.receiverName = data[1]
+		self.weight = float(data[2])
 
 class KnowingNeuralWeb:
 	def __init__(self):
@@ -38,15 +53,11 @@ class KnowingNeuralWeb:
 		for line in lines:
 			line = line.strip("\n")
 			if line.startswith("neuron "):
-				web.addNeuron(Neuron(line[7:]))
-			elif line.startswith("outputneuron "):
-				web.addNeuron(OutputNeuron(line[13:]))
+				data = line[7:].split(", ")
+				web.addNeuron(Neuron(data))
 			elif line.startswith("connection "):
-				tmp = line[11:].split(", ")
-				sender = tmp[0]
-				receiver = tmp[1]
-				weight = float(tmp[2])
-				web.addConnection(Connection(sender, receiver, weight))
+				data = line[11:].split(", ")
+				web.addConnection(Connection(data))
 			else:
 				print("can't interpret line \"" + line + "\"")
 		return web
@@ -75,11 +86,13 @@ class KnowingNeuralWeb:
 		for connection in self.connections: # could be removed
 			connection.activity = 0
 	def run(self):
-		sys.stdout.write(self.toString())
-		try: # ^C -> except
+		print("PRE:\n")
+		print(self.toString())
+		print("\nSTART:\n")
+		try:
 			while True:
 				input("")
 				self.tick()
-				sys.stdout.write(self.toString())
+				print(self.toString())
 		except:
-			print("\nExited ...")
+			print("Exited ...")

@@ -1,2 +1,0 @@
-neuron heart
-connection heart, heart, 1

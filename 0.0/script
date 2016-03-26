@@ -2,6 +2,6 @@
 
 import knw
 
-web = knw.KnowingNeuralWeb.loadFromFile("heart.knw")
-web.getNeuron("heart").activity = 1
+web = knw.KnowingNeuralWeb.loadFromFile("file.knw")
+web.getNeuron("in").activity = 1
 web.run()
