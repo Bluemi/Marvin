@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+
+class Neuron:
+	def __init__(self, name):
+		self.name = name
+		self.activity = 0
+
+class Connection:
+	def __init__(self, sender, receiver, weigth):
+		self.activity = 0
+		self.senderName = sender
+		self.receiverName = receiver
+		self.weigth = weigth
+class KnowingNeuralWeb:
+	def __init__(self):
+		self.neurons = list()
+		self.connections = list()
+	def addNeuron(self, neuron):
+		self.neurons.append(neuron)
+	def addConnection(self, connection):
+		self.connections.append(connection)
+	@staticmethod
+	def loadFromFile(filename):
+		web = KnowingNeuralWeb()
+		f = open(filename)
+		lines = f.readlines()
+		f.close()
+		for line in lines:
+			line = line.strip("\n")
+			if line.startswith("neuron "):
+				web.addNeuron(Neuron(line[7:]))
+			elif line.startswith("connection "):
+				tmp = line[11:].split(", ")
+				sender = tmp[0]
+				receiver = tmp[1]
+				weigth = tmp[2]
+				web.addConnection(Connection(sender, receiver, weigth))
+			else:
+				print("can't interpret line \"" + line + "\"")
+		return web
+	def toString(self):
+		string = str()
+		for neuron in self.neurons:
+			string += neuron.name + ": "
+			for connection in self.connections:
+				if connection.senderName == neuron.name:
+					string += "(" + connection.receiverName + ", " + str(connection.weigth) + ")"
+			string += "\n"
+		return string.strip("\n")
+
+web = KnowingNeuralWeb.loadFromFile("file.knw")
+print(web.toString())

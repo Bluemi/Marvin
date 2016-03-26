@@ -1,0 +1,4 @@
+neuron a
+neuron b
+connection a, b, 43
+connection a, a, 0.3
