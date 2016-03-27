@@ -86,13 +86,19 @@ class KnowingNeuralWeb:
 		for connection in self.connections: # could be removed
 			connection.activity = 0.0
 	def run(self):
+		print("<Enter> to go one step forward")
+		print("<neuron> = <activity> to set the activity\n")
 		print("PRE:\n")
 		print(self.toString())
 		print("\nSTART:\n")
 		try:
 			while True:
-				input("")
-				self.tick()
+				i = input(">> ")
+				if i != "":
+					tmp = i.replace(" ", "").split("=")
+					self.getNeuron(tmp[0]).activity = float(tmp[1])
+				else:
+					self.tick()
 				print(self.toString())
 		except:
 			print("Exited ...")

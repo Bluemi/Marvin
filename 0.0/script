@@ -3,5 +3,4 @@
 import knw
 
 web = knw.KnowingNeuralWeb.loadFromFile("file.knw")
-web.getNeuron("in").activity = 1
 web.run()
