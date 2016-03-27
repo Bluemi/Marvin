@@ -90,10 +90,10 @@ class KnowingNeuralWeb:
 		print("<neuron> = <activity> to set the activity\n")
 		print("PRE:\n")
 		print(self.toString())
-		print("\nSTART:\n")
+		print("\nSTART:")
 		try:
 			while True:
-				i = input(">> ")
+				i = input("\n>> ")
 				if i != "":
 					tmp = i.replace(" ", "").split("=")
 					self.getNeuron(tmp[0]).activity = float(tmp[1])
