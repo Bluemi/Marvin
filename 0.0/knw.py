@@ -5,7 +5,7 @@ import sys
 class Neuron:
 	def __init__(self, data):
 		self.name = data[0]
-		self.activity = 0
+		self.activity = 0.0
 		self.isMin = False
 		self.isOutput = False
 		for i in range(1, len(data)):
@@ -24,14 +24,14 @@ class Neuron:
 				self.activity = activity
 				self.onActivated()
 			else:
-				self.activity = 0
+				self.activity = 0.0
 		else:
 			self.onActivated()
 			self.activity = activity
 
 class Connection:
 	def __init__(self, data):
-		self.activity = 0
+		self.activity = 0.0
 		self.senderName = data[0]
 		self.receiverName = data[1]
 		self.weight = float(data[2])
@@ -78,13 +78,13 @@ class KnowingNeuralWeb:
 		for connection in self.connections:
 			connection.activity = connection.weight * self.getNeuron(connection.senderName).activity
 		for neuron in self.neurons:
-			tmpAct = 0
+			tmpAct = 0.0
 			for connection in self.connections:
 				if connection.receiverName == neuron.name:
 					tmpAct += connection.activity
 			neuron.applyActivity(tmpAct)
 		for connection in self.connections: # could be removed
-			connection.activity = 0
+			connection.activity = 0.0
 	def run(self):
 		print("PRE:\n")
 		print(self.toString())
