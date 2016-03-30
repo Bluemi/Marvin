@@ -1,5 +1,7 @@
 package brain.neurons;
 
+import java.util.LinkedList;
+
 import brain.Triggable;
 import brain.synapses.Synapse;
 import misc.Debug;
