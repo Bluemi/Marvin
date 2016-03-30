@@ -79,10 +79,15 @@ class KnowingNeuralWeb:
 			connection.activity = connection.weight * self.getNeuron(connection.senderName).activity
 		for neuron in self.neurons:
 			tmpAct = 0.0
+			gotActivation = False
 			for connection in self.connections:
-				if connection.receiverName == neuron.name:
+				if connection.receiverName == neuron.name and connection.activity != 0:
+					gotActivation = True
 					tmpAct += connection.activity
-			neuron.applyActivity(tmpAct)
+			if gotActivation:
+				neuron.applyActivity(tmpAct)
+			else:
+				neuron.activity = 0
 		for connection in self.connections: # could be removed
 			connection.activity = 0.0
 	def run(self):
