@@ -6,12 +6,12 @@ class Neuron:
 	def __init__(self, data):
 		self.name = data[0]
 		self.activity = 0.0
-		self.isMin = False
+		self.isFunc = False
 		self.isOutput = False
 		for i in range(1, len(data)):
-			if data[i].startswith("min="):
-				self.isMin = True
-				self.minActivity = float(data[i][4:])
+			if data[i].startswith("func="):
+				self.isFunc = True
+				self.func = data[i][5:]
 			elif data[i].startswith("out="):
 				self.isOutput = True
 				self.output = data[i][4:]
@@ -19,8 +19,8 @@ class Neuron:
 		if self.isOutput:
 			print("\"" + self.output + "\"")
 	def applyActivity(self, activity):
-		if self.isMin:
-			if activity >= self.minActivity:
+		if self.isFunc:
+			if eval(self.func):
 				self.activity = activity
 				self.onActivated()
 			else:
@@ -91,14 +91,15 @@ class KnowingNeuralWeb:
 		print("PRE:\n")
 		print(self.toString())
 		print("\nSTART:")
-		try:
-			while True:
+		while True:
+			try:
 				i = input("\n>> ")
-				if i != "":
-					tmp = i.replace(" ", "").split("=")
-					self.getNeuron(tmp[0]).activity = float(tmp[1])
-				else:
-					self.tick()
-				print(self.toString())
-		except:
-			print("Exited ...")
+			except:
+				print("Exited .. ")
+				sys.exit()
+			if i != "":
+				tmp = i.replace(" ", "").split("=")
+				self.getNeuron(tmp[0]).activity = float(tmp[1])
+			else:
+				self.tick()
+			print(self.toString())
