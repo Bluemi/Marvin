@@ -1,0 +1,5 @@
+neuron in1
+neuron in2
+connection in1, outy, 1
+connection in2, outy, -1
+neuron outy, out=equalinput, func=(activity==0)
